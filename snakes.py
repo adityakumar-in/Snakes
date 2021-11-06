@@ -20,15 +20,15 @@ screen_height = 600
 gameWindow = pygame.display.set_mode((screen_width, screen_height))
 
 # Welcome Image
-welimg = pygame.image.load("images/welcome.png")
+welimg = pygame.image.load("welcome.png")
 welimg = pygame.transform.scale(welimg, (screen_width, screen_height)).convert_alpha()
 
 #Background Image
-bgimg = pygame.image.load("images/games.jpg")
+bgimg = pygame.image.load("games.jpg")
 bgimg = pygame.transform.scale(bgimg, (screen_width, screen_height)).convert_alpha()
 
 # Game over Image
-goimg = pygame.image.load("images/game.png")
+goimg = pygame.image.load("game.png")
 goimg = pygame.transform.scale(goimg, (screen_width, screen_height)).convert_alpha()
 
 # Game Title
@@ -58,7 +58,7 @@ def welcome():
                 exit_game = True
             if event.type == pygame.KEYDOWN:
                 
-                pygame.mixer.music.load('music/games.mp3')
+                pygame.mixer.music.load('games.mp3')
                 pygame.mixer.music.play()
                 
                 gameloop()
@@ -79,11 +79,11 @@ def gameloop():
     snk_list = []
     snk_length = 1
     # Check if hiscore file exists
-    if(not os.path.exists("hiscore.txt")):
-        with open("hiscore.txt", "w") as f:
+    if(not os.path.exists("hiscores.txt")):
+        with open("hiscores.txt", "w") as f:
             f.write("0")
 
-    with open("hiscore.txt", "r") as f:
+    with open("hiscores.txt", "r") as f:
         hiscore = f.read()
         
     # Creating Food
@@ -97,7 +97,7 @@ def gameloop():
     # Snake Collapse
     while not exit_game:
         if game_over:
-            with open("hiscore.txt", "w") as f:
+            with open("hiscores.txt", "w") as f:
                 f.write(str(hiscore))
             gameWindow.fill(white)
             gameWindow.blit(goimg, (0, 0))
@@ -184,13 +184,13 @@ def gameloop():
             if head in snk_list[:-1]:
                 game_over = True
                 # Game Over Music
-                pygame.mixer.music.load('music/game.mp3')
+                pygame.mixer.music.load('game.mp3')
                 pygame.mixer.music.play()
                 
             # Checking for collapse with boundary
             if snake_x<0 or snake_x>screen_width or snake_y<0 or snake_y>screen_height:
                 game_over = True
-                pygame.mixer.music.load('music/game.mp3')
+                pygame.mixer.music.load('game.mp3')
                 pygame.mixer.music.play()
                 
             plot_snake(gameWindow, black, snk_list, snake_size)
